@@ -135,6 +135,8 @@ rm -rf /etc/wireguard
 rm -rf /etc/qrencode
 rm -rf /etc/sysctl.d/wireguard.conf
 sysctl -p
+echo
+echo "Wireguard successfully uninstalled"
 else
 echo
 echo "Removal aborted!"
