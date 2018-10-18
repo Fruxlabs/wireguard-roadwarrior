@@ -98,8 +98,6 @@ echo "Select the existing client you want to revoke:"
 PS3="Client: "
 select option in $ClientLocation
 do
-echo $option
-echo
 for ((i = 0; i < ${#ClientList}; i++)); do
 if [[ ${ClientList[$i]} = $option ]]; then
 echo
@@ -107,6 +105,8 @@ read -p "Do you really want to revoke access for client $option? [y/N]: " -e REV
 if [[ "$REVOKE" = 'y' || "$REVOKE" = 'Y' ]]; then
 sudo wg set wg0 peer $(cat /etc/wireguard/$option/public.key) remove
 rm -rf /etc/wireguard/$option
+echo
+echo "Configuration for client $option revoked!"
 exit
 else
 echo
