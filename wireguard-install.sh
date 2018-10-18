@@ -86,44 +86,43 @@ exit
 2)
 echo "This is under development"
 ClientNumber=$(find /etc/wireguard/* -type f -name '*.key' | sed -r 's|/[^/]+$||' | uniq | wc -l)
-ClientLocation=$(find /etc/wireguard/* -type f -name '*.key' | sed -r 's|/[^/]+$||' | uniq | cut -d"/" -f4) 
-if [[ "$ClientNumber" = '0' ]]; then 
+ClientLocation=$(find /etc/wireguard/* -type f -name '*.key' | sed -r 's|/[^/]+$||' | uniq | cut -d"/" -f4)
+ClientList=($(echo $ClientLocation))
+if [[ "$ClientNumber" = '0' ]]; then
 echo "You have no existing clients!"
 exit
 else
 echo
 echo "Select the existing client you want to revoke:"
-echo
 # Client Removal Program
 PS3="Client: "
 select option in $ClientLocation
 do
-case $option in
-
-$ClientLocation)
+echo $option
+echo
+for ((i = 0; i < ${#ClientList}; i++)); do
+if [[ ${ClientList[$i]} = $option ]]; then
 echo
 read -p "Do you really want to revoke access for client $option? [y/N]: " -e REVOKE
 if [[ "$REVOKE" = 'y' || "$REVOKE" = 'Y' ]]; then
 sudo wg set wg0 peer $(cat /etc/wireguard/$option/public.key) remove
 rm -rf /etc/wireguard/$option
+exit
 else
 echo
 echo "Revocation of client $option aborted!"
 fi
 exit
-;;
-
-*)
+fi
+done
+if ((i == ${#ClientList})); then
 echo "Incorrect Option Selected"
 echo "Run the script again"
-exit
-;;
-esac
+fi
 done
 fi
 exit
 ;;
-
 3) 
 echo
 read -p "Do you really want to remove Wireguard? [y/N]: " -e REMOVE
