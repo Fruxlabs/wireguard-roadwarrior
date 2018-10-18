@@ -6,7 +6,7 @@ This script will let you setup your own VPN server, even if you haven't used Wir
 ### Installation
 Run the script and follow the assistant:
 
-`wget https://git.io/fxVb8 -O wireguard-roadwarrior.sh && bash openvpn-install.sh`
+`wget https://git.io/fxVb8 -O wireguard-install.sh && bash openvpn-install.sh`
 
 Once it ends, you can run it again to add more users, remove some of them or even completely uninstall Wireguard VPN.
 
