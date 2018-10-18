@@ -156,10 +156,7 @@ echo
 echo "I need to ask you a few questions before starting the setup."
 echo "You can leave the default options and just press enter if you are ok with them."
 echo
-echo "What is your internet interface name?"
-read -p "Interface: " -e INTERFACE
-echo
-echo "Provide the IPv4 address of the network interface you want Wireguard"
+echo "First, Provide the IPv4 address of the network interface you want Wireguard"
 echo "listening to."
 # Autodetect IP address and pre-fill for the user
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
@@ -180,6 +177,7 @@ read -p "Client name: " -e -i client CLIENT
 echo
 echo "Okay, that was all I needed. We are ready to set up your Wireguard VPN server now."
 read -n1 -r -p "Press any key to continue..."
+INTERFACE=$(ip -o link show | sed -rn '/^[0-9]+: en/{s/.: ([^:]*):.*/\1/p}')
 if [[ "$OS"='debian' ]]; then
 echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable.list
 printf 'Package: *\nPin: release a=unstable\nPin-Priority: 150\n' > /etc/apt/preferences.d/limit-unstable
