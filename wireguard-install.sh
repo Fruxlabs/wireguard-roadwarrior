@@ -3,6 +3,7 @@
 # https://github.com/Fruxlabs/wireguard-roadwarrior
 #
 # Copyright (c) 2018 eshanaswar. Released under the MIT License.
+# Find me @ https://www.linkedin.com/in/eshanaswar/
 
 # Detect Debian users running the script with "sh" instead of bash
 if readlink /proc/$$/exe | grep -q "dash"; then
