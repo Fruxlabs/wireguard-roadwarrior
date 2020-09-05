@@ -174,8 +174,6 @@ echo "Okay, that was all I needed. We are ready to set up your Wireguard VPN ser
 read -n1 -r -p "Press any key to continue..."
 INTERFACE=$(ip -o link show | sed -rn '/^[0-9]+: en/{s/.: ([^:]*):.*/\1/p}')
 if [[ "$OS"='debian' ]]; then
-echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable.list
-printf 'Package: *\nPin: release a=unstable\nPin-Priority: 150\n' > /etc/apt/preferences.d/limit-unstable
 apt update
 apt install wireguard qrencode -y
 fi
